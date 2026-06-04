@@ -1,0 +1,9 @@
+# Kütüphane Yönetim Sistemi — Bağımlılıklar
+#
+# Bu proje yalnızca Python standart kütüphanesini kullanır:
+#   - sqlite3   (veritabanı)
+#   - unittest  (testler)
+#   - datetime  (tarih işlemleri)
+#
+# Harici (pip ile kurulması gereken) bir paket YOKTUR.
+# Python 3.10+ kurulu olması yeterlidir.
