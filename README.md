@@ -118,4 +118,4 @@ Her test geçici bir veritabanı üzerinde izole çalışır.
 
 ## 🔗 GitHub Deposu
 
-Repo linki: _<GitHub'da depo oluşturduktan sonra buraya eklenecek>_
+Repo linki: https://github.com/BatuBozkurt/kutuphane-yonetim-sistemi
