@@ -116,6 +116,64 @@ Her test geçici bir veritabanı üzerinde izole çalışır.
 
 ---
 
+## 🛠️ Projeyi Nasıl Yaptım — İzlediğim Süreç
+
+Projeyi adım adım, her aşamayı ayrı bir commit olacak şekilde geliştirdim:
+
+1. **Planlama:** İki proje seçeneğinden (Kütüphane Yönetim Sistemi / Olist veri analizi)
+   daha self-contained ve harici bağımlılık gerektirmeyen **Kütüphane Yönetim Sistemi**'ni
+   seçtim. Teknoloji olarak **Python + SQLite** belirledim çünkü `sqlite3` Python'a
+   gömülüdür ve kurulum derdi yoktur.
+2. **Veritabanı tasarımı:** Önce kağıt üzerinde varlıkları (kitap, üye, ödünç) ve
+   aralarındaki ilişkileri çıkardım, ardından `sql/schema.sql` içinde `CREATE TABLE`,
+   foreign key kısıtlamaları ve örnek verileri yazdım.
+3. **Katmanlı kod:** Veritabanı bağlantısını (`db.py`), iş mantığı/CRUD katmanını
+   (`repository.py`) ve kullanıcı arayüzünü (`main.py`) ayrı dosyalara böldüm. Bu
+   ayrım sayesinde arayüzü değiştirmeden mantığı test edebildim.
+4. **Test:** `unittest` ile her CRUD işlemini ve ödünç/iade iş kurallarını doğrulayan
+   12 test yazdım. Testler geçici veritabanı üzerinde izole çalışır.
+5. **Dokümantasyon ve sürüm kontrolü:** README'yi yazdım, `git` ile anlamlı commit'ler
+   attım ve projeyi GitHub'a push'ladım.
+
+## 😅 Zorlandığım Kısımlar
+
+- **SQLite foreign key davranışı:** SQLite'ta foreign key kısıtlamaları varsayılan
+  olarak **kapalıdır**; her bağlantıda `PRAGMA foreign_keys = ON` çalıştırmam
+  gerektiğini fark etmem zaman aldı.
+- **Stok tutarlılığı:** Bir kitabın "toplam kopya" ve "mevcut kopya" sayılarını
+  ödünç verme/iade işlemlerinde tutarlı tutmak (özellikle güncelleme sırasında ödünçte
+  olan kopyaları korumak) üzerinde dikkatle düşündüğüm bir kısımdı.
+- **Testleri izole etmek:** Testlerin birbirini etkilememesi için her testte geçici
+  bir veritabanı oluşturup sonunda silmek gerekti; bunu `tempfile` ile çözdüm.
+- **GitHub kimlik doğrulama:** Depoyu push'larken `gh` CLI kurulumu ve tarayıcı
+  üzerinden kimlik doğrulama (auth) adımını yapmak başta kafa karıştırıcıydı.
+
+## 🎓 Proje Sonunda Neler Öğrendim
+
+- İlişkisel veritabanı tasarımının (tablolar, **birincil/yabancı anahtarlar**,
+  ilişkiler) bir uygulamanın temelini nasıl oluşturduğunu.
+- Kodu **katmanlara ayırmanın** (veri erişimi / iş mantığı / arayüz) bakım ve test
+  kolaylığı açısından değerini.
+- **Parametreli sorguların** SQL injection'a karşı neden zorunlu olduğunu.
+- `unittest` ile **otomatik test** yazmanın, bir değişiklikten sonra her şeyin hâlâ
+  çalıştığına güven vermesini.
+- **Git/GitHub** ile anlamlı commit'ler atarak bir projenin gelişim sürecini takip
+  edilebilir biçimde belgelemeyi.
+
+## 🧩 Python, SQL ve GitHub'ın Projedeki Rolü
+
+- **Python:** Uygulamanın iskeletini oluşturdu — veritabanına bağlanma, iş kurallarını
+  (ödünç/iade, stok kontrolü) uygulama ve kullanıcıyla etkileşen CLI menüsünü sağlama.
+  Standart kütüphanesi (`sqlite3`, `unittest`, `datetime`) sayesinde tek bir harici
+  paket bile gerektirmedi.
+- **SQL:** Verinin kalıcı olarak saklandığı ve yapılandırıldığı katman. `CREATE TABLE`
+  ile şemayı, `FOREIGN KEY` ile ilişkileri kurdum; `INSERT/SELECT/UPDATE/DELETE` ile
+  CRUD'u, `JOIN` ile de kitap–üye–ödünç verilerini birleştirerek anlamlı listeler
+  ürettim. Veri bütünlüğü (UNIQUE, CHECK, FK) tamamen SQL tarafında garanti altına alındı.
+- **GitHub:** Projenin sürüm kontrolü ve teslim platformu. Her geliştirme aşamasını ayrı
+  bir commit ile kaydederek sürecin görünür olmasını sağladım; depo public olduğundan
+  değerlendirme için erişilebilir.
+
 ## 🔗 GitHub Deposu
 
 Repo linki: https://github.com/BatuBozkurt/kutuphane-yonetim-sistemi
