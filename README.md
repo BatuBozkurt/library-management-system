@@ -176,4 +176,4 @@ Projeyi adım adım, her aşamayı ayrı bir commit olacak şekilde geliştirdim
 
 ## 🔗 GitHub Deposu
 
-Repo linki: https://github.com/BatuBozkurt/kutuphane-yonetim-sistemi
+Repo linki: https://github.com/BatuBozkurt/library-management-system
